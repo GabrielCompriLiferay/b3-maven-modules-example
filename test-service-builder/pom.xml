@@ -6,9 +6,10 @@
     <groupId>liferay</groupId>
     <version>1.0.0</version>
   </parent>
-	<groupId>hello.world</groupId>
-	<artifactId>hello-world</artifactId>
+	<groupId>test.service.builder</groupId>
+	<artifactId>test-service-builder</artifactId>
 	<version>1.0.0</version>
+	<packaging>pom</packaging>
 	<profiles>
 		<profile>
 			<id>standalone</id>
@@ -61,15 +62,27 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	<dependencies>
-		<dependency>
-			<groupId>com.liferay.portal</groupId>
-			<artifactId>release.dxp.api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.1.2</version>
+				<configuration>
+					<archive>
+						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+					</archive>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>biz.aQute.bnd</groupId>
 				<artifactId>bnd-maven-plugin</artifactId>
@@ -94,44 +107,10 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-			<plugin>
-				<groupId>com.liferay</groupId>
-				<artifactId>com.liferay.css.builder</artifactId>
-				<version>3.1.4</version>
-				<executions>
-					<execution>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>build</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<baseDir>src/main/resources/META-INF/resources</baseDir>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.1.2</version>
-				<configuration>
-					<archive>
-						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
-					</archive>
-					<excludes>
-						<exclude>**/META-INF/resources/**/.sass-cache/</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
+	<modules>
+		<module>test-service-builder-api</module>
+		<module>test-service-builder-service</module>
+	</modules>
 </project>
